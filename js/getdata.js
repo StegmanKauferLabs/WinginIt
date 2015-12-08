@@ -17,8 +17,8 @@ function getData(callback){
 	var returnedCount = 0;
 	var xyURL = "res/xy00009.txt";
 	var elURL = "res/el00009.txt";
-	var xyList = [];
-	var elList = [];
+	xyList = [];
+	elList = [];
 	var error = false;
 	loadURL(xyURL, function(xy){
 		if(xy === null){
@@ -59,4 +59,39 @@ function getData(callback){
 			callback(xyList, elList, error);
 		}
 	});
+}
+
+function getBorderCount(list1, list2){
+	var count = 0;
+	for(var i=0; i<list1.length; i++){
+		if(list2.indexOf(list1[i]) != -1){
+			count += 1;
+		}
+	}
+	return count;
+}
+
+function isLine(list){
+	for(var i=0; i<list.length; i++){
+		if(list[i] < 0){
+			return true;
+		}
+	}
+	return false;
+}
+
+function getBordering(elList, a, b, c, d){
+	var current = 0;
+	var bordering = [];
+	for(var i=0; i<elList.length; i++){
+		var isShape = !isLine(elList[i]);
+		var borderCount = getBorderCount([a, b, c, d], elList[i]);
+		if(isShape && borderCount >= 2 && borderCount < 4){
+			bordering.push(current);
+		}
+		if(isShape){
+			current += 1;
+		}
+	}
+	return bordering;
 }
