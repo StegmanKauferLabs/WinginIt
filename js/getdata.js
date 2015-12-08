@@ -3,8 +3,8 @@ var el = "";
 
 function loadData(done){
 	//The function is a bit more complex because JS loads are async, not sync
-	var xyURL = "https://raw.githubusercontent.com/StegmanKauferLabs/WinginIt/gh-pages/res/xy00009.txt";
-	var elURL = "https://raw.githubusercontent.com/StegmanKauferLabs/WinginIt/gh-pages/res/el00009.txt";
+	var xyURL = "/res/xy00009.txt";
+	var elURL = "/res/el00009.txt";
 	var xyFile = new XMLHttpRequest();
 	var elFile = new XMLHttpRequest();
     xyFile.open("GET", xyURL, false);
