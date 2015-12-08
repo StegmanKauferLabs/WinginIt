@@ -1,39 +1,45 @@
 var xy = "";
 var el = "";
 
-function loadData(done){
-	//The function is a bit more complex because JS loads are async, not sync
+function loadURL(url, doneCallback) {
+    var xhr;
+
+    xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = handleStateChange;
+    xhr.open("GET", url, true);
+    xhr.send();
+
+    function handleStateChange() {
+        if (xhr.readyState === 4) {
+            doneCallback(xhr.status == 200 ? xhr.responseText : null);
+        }
+    }
+}
+
+function getData(callback){
+	var returnedCount = 0;
 	var xyURL = "/res/xy00009.txt";
 	var elURL = "/res/el00009.txt";
-	var xyFile = new XMLHttpRequest();
-	var elFile = new XMLHttpRequest();
-    xyFile.open("GET", xyURL, false);
-    elFile.open("GET", elURL, false);
-    loadCount = 0;
-    xyFile.onreadystatechange = function (){ //async
-		if(xyFile.readyState === 4 && (xyFile.status === 200 || xyFile.status == 0)){
-            xy = xyFile.responseText;
-            loadCount += 1;
-            if(loadCount == 2){ //have both been loaded?
-            	done();
-            }
-        }
-    }
-    elFile.onreadystatechange = function (){ //async
-		if(elFile.readyState === 4 && (elFile.status === 200 || elFile.status == 0)){
-            el = elFile.responseText;
-            loadCount += 1;
-            if(loadCount == 2){ //have both been loaded?
-            	done();
-            }
-        }
-    }
-    xyFile.send(null);
-    elFile.send(null);
+	loadURL(xyURL, function(xy){
+		if(xy === null){
+			console.log("ERROR");
+			return;
+		}
+		console.log(xy);
+		returnedCount += 1;
+		if(returnedCount == 2){
+			callback();
+		}
+	});
+	loadURL(elURL, function(el){
+		if(xy === null){
+			console.log("ERROR");
+			return;
+		}
+		console.log(el);
+		returnedCount += 1;
+		if(returnedCount == 2){
+			callback();
+		}
+	});
 }
-
-var onLoad = function(){
-	console.log("Loaded", xy, " ", el);
-}
-
-loadData(onLoad);
