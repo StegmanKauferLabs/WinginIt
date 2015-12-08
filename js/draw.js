@@ -32,15 +32,37 @@ two.renderer.domElement.onmousewheel = function(e){
 	two.update()
 }
 
+var mouseDown = false
+
+var widthRatio = two.renderer.domElement.width 
+
+two.renderer.domElement.onmousedown = function(e){
+	mouseDown = true
+}
+
+two.renderer.domElement.onmouseup = function(e){
+	mouseDown = false
+}
+
+two.renderer.domElement.onmousemove = function(e){
+	if(!mouseDown)
+		return
+
+	var dx = e.movementX / zui.scale
+	var dy = e.movementY / zui.scale
+
+	shiftScene(dx, dy)
+}
+
 two.appendTo(el);
 two.update();
 
 var fillColor = "#3498db"
 var lineColor = "#34495e"
 
-var innerEdgeLineColor = "#d35400"
+var innerEdgeLineColor = "#16a085"
 
-var outerEdgeLineColor = "#16a085"
+var outerEdgeLineColor = "#d35400"
 
 
 /*
@@ -72,6 +94,16 @@ function serializeVertices(xyArray){
 var shapes = []
 var lines = []
 
+function shiftScene(x, y){
+	for(var i = 0; i < two.scene.children.length; i++){
+	var el = two.scene.children[i]
+		for(var j = 0; j < el.vertices.length; j++){
+			el.vertices[j].addSelf(new Two.Anchor(x, y))
+		}
+
+	}
+}
+
 function drawShapes(xyArray, shapeVerticesArray){
 	for(var i = 0; i < shapeVerticesArray.length; i++){
 		var vertices = []
@@ -84,9 +116,9 @@ function drawShapes(xyArray, shapeVerticesArray){
 			var index = shapeVerticesIndices[j]
 			if(index < 0){
 				if(index == -1)
-					strokeColor = outerEdgeLineColor
-				else
 					strokeColor = innerEdgeLineColor
+				else
+					strokeColor = outerEdgeLineColor
 				continue;//weird case, I forget what happens, but we do something weird
 			}
 
