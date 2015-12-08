@@ -80,12 +80,12 @@ function isLine(list){
 	return false;
 }
 
-function getBordering(elList, a, b, c, d){
+function getBordering(elList, verts){
 	var current = 0;
 	var bordering = [];
 	for(var i=0; i<elList.length; i++){
 		var isShape = !isLine(elList[i]);
-		var borderCount = getBorderCount([a, b, c, d], elList[i]);
+		var borderCount = getBorderCount(verts, elList[i]);
 		if(isShape && borderCount >= 2 && borderCount < 4){
 			bordering.push(current);
 		}
