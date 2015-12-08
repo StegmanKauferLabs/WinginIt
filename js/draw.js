@@ -122,6 +122,8 @@ function drawShapes(xyArray, shapeVerticesArray){
 				continue;//weird case, I forget what happens, but we do something weird
 			}
 
+
+
 			vertices.push(xyArray[index])
 		}
 
@@ -136,6 +138,7 @@ function drawShapes(xyArray, shapeVerticesArray){
 			shapePath = new Two.Path(vertices, true, false)
 			shapePath.fill = fillColor;
 			pushArray = shapes
+			shapePath.neighborIndices = getBordering(shapeVerticesArray, shapeVerticesIndices)
 		}
 		
 		shapePath.stroke = strokeColor;
@@ -151,4 +154,6 @@ getData(function(xyArray, shapeVerticesArray){
 	verticesArray = serializeVertices(xyArray)
 
 	drawShapes(verticesArray, shapeVerticesArray)
+
 });
+
