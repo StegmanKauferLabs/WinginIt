@@ -63,9 +63,3 @@ function getData(callback){
 		}
 	});
 }
-
-getData(function(a, b, c){
-	console.log(a);
-	console.log(b);
-	console.log(c);
-});
