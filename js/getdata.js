@@ -1,6 +1,3 @@
-var xy = "";
-var el = "";
-
 function loadURL(url, doneCallback) {
     var xhr;
 
@@ -20,8 +17,8 @@ function getData(callback){
 	var returnedCount = 0;
 	var xyURL = "res/xy00009.txt";
 	var elURL = "res/el00009.txt";
-	xyList = [];
-	elList = [];
+	var xyList = [];
+	var elList = [];
 	var error = false;
 	loadURL(xyURL, function(xy){
 		if(xy === null){
