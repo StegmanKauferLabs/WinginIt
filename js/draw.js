@@ -64,6 +64,9 @@ var innerEdgeLineColor = "#16a085"
 
 var outerEdgeLineColor = "#d35400"
 
+var hoverNeighborColor = "#1abc9c"
+var hoverColor = "#e67e22"
+
 
 /*
 
@@ -139,12 +142,44 @@ function drawShapes(xyArray, shapeVerticesArray){
 			shapePath.fill = fillColor;
 			pushArray = shapes
 			shapePath.neighborIndices = getBordering(shapeVerticesArray, shapeVerticesIndices)
+
 		}
 		
 		shapePath.stroke = strokeColor;
 		shapePath.neighboringShapeIndices = shapeVerticesIndices
 		two.add(shapePath)
+		two.update()
 		pushArray.push(shapePath)
+
+		function closuresAreFunky(shapePathArg){
+			document.getElementById(shapePathArg.id).onmouseenter = function(){
+
+				shapePathArg.fill = hoverColor
+
+				for(var k = 0; k < shapePathArg.neighborIndices.length; k++){
+					var shapeIndex = shapePathArg.neighborIndices[k]
+					var shapeNeighbor = shapes[shapeIndex]
+					shapeNeighbor.fill = hoverNeighborColor
+				}
+
+			}
+
+			document.getElementById(shapePathArg.id).onmouseleave = function(){
+
+				shapePathArg.fill = fillColor
+
+				for(var k = 0; k < shapePathArg.neighborIndices.length; k++){
+					var shapeIndex = shapePathArg.neighborIndices[k]
+					var shapeNeighbor = shapes[shapeIndex]
+					shapeNeighbor.fill = fillColor
+				}
+			}
+		}
+
+		if(vertices.length == 4){
+			closuresAreFunky(shapePath)
+
+		}
 	}
 }
 
