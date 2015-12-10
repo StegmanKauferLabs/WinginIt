@@ -51,7 +51,7 @@ two.renderer.domElement.onmousemove = function(e){
 	var dx = e.movementX / zui.scale
 	var dy = e.movementY / zui.scale
 
-	shiftScene(dx, dy)
+	shiftScene(dx/4, dy/4)
 }
 
 two.appendTo(el);
