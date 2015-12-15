@@ -9,7 +9,7 @@ var verticesArray
 
 
 var zui = new ZUI(two);
-zui.addLimits(0.5, 400);
+zui.addLimits(0.5, 10000);
 
 two.renderer.domElement.onmousewheel = function(e){
 	e.stopPropagation();
